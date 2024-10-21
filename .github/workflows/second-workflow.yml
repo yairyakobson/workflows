@@ -1,0 +1,44 @@
+name: Second Workflow # The key must be called name
+
+# When will the workflow be executed
+on:  workflow_dispatch
+
+# Operations
+jobs:
+  test-job: # Not Reserved
+    runs-on: windows-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4 # An action we want to use
+        
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          
+      - name: Install dependencies
+        run: npm ci # Installs dependencies locked in the package-lock.json file
+      
+      - name: Code testing
+        run: npm test
+        
+  deployment-job:
+    needs: test-job # deployment-job will be executed when test-job execution is finished
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4 # An action we want to use
+        
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          
+      - name: Install dependencies
+        run: npm ci # Installs dependencies locked in the package-lock.json file
+      
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy project
+        run: echo "Deploying..."
