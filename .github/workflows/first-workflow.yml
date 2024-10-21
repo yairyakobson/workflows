@@ -1,7 +1,11 @@
 name: First Workflow # The key must be called name
 
 # When will the workflow be executed
-on: workflow_dispatch # workflow_dispatch = Manually triggers the workflow
+on:
+  push:
+    branches:
+      - second-workflow
+  workflow_dispatch:
 
 # Operations
 jobs:
