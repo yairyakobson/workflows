@@ -1,7 +1,7 @@
 name: Second Workflow # The key must be called name
 
 # When will the workflow be executed
-on:  [workflow_dispatch, push]
+on: push
 
 # Operations
 jobs:
